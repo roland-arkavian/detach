@@ -51,7 +51,7 @@ class Detach(object):
         """Close a file descriptor if it is open."""
         try:
             os.close(fd)
-        except OSError, exc:
+        except OSError as exc:
             if exc.errno != errno.EBADF:
                 msg = "Failed to close file descriptor {}: {}".format(fd, exc)
                 raise Error(msg)
@@ -113,7 +113,8 @@ def call(args, stdout=None, stderr=None, stdin=None, daemonize=False,
     specified. The `preexec_fn`, `shell`, `cwd`, and `env` parameters are the same as their `Popen`
     counterparts. Return the PID of the child process if not daemonized.
     """
-    stream = lambda s, m: s is None and os.open(os.devnull, m) or s
+    def stream(s, m):
+        return s is None and os.open(os.devnull, m) or s
     stdout = stream(stdout, os.O_WRONLY)
     stderr = stream(stderr, os.O_WRONLY)
     stdin = stream(stdin, os.O_RDONLY)
