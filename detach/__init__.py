@@ -1,7 +1,7 @@
 """Fork and detach the current process."""
 import errno
 import os
-import resource
+# import resource
 import subprocess
 import sys
 import traceback
